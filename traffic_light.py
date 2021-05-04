@@ -2,8 +2,8 @@ import RPi.GPIO as GPIO
 import time
 
 RED = 17
-YELLOW = 22
-GREEN = 27
+YELLOW = 27
+GREEN = 22
 
 
 # Pin Setup:
@@ -17,8 +17,7 @@ GPIO.output(RED, GPIO.LOW)
 GPIO.output(YELLOW, GPIO.LOW)
 GPIO.output(GREEN, GPIO.LOW)
 
-time.sleep(30)
-exit()
+
 while True:
     GPIO.output(RED,GPIO.HIGH)
     time.sleep(5)
