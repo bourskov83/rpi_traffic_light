@@ -23,7 +23,7 @@ try:
         GPIO.output(RED,GPIO.LOW)
         time.sleep(WAIT)
         GPIO.output(YELLOW,GPIO.LOW)
-        time.sleep(3)
+        time.sleep(2)
         GPIO.output(GREEN,GPIO.LOW)
         GPIO.output(RED, GPIO.HIGH)
         GPIO.output(YELLOW, GPIO.HIGH)
