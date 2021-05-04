@@ -17,7 +17,8 @@ GPIO.output(RED, GPIO.LOW)
 GPIO.output(YELLOW, GPIO.LOW)
 GPIO.output(GREEN, GPIO.LOW)
 
-
+time.sleep(30)
+exit()
 while True:
     GPIO.output(RED,GPIO.HIGH)
     time.sleep(5)
