@@ -18,8 +18,8 @@ GPIO.output(YELLOW, GPIO.HIGH)
 GPIO.output(GREEN, GPIO.HIGH)
 
 
-while True:
-    try:
+try:
+    while True:
         GPIO.output(RED,GPIO.LOW)
         time.sleep(5)
         GPIO.output(YELLOW,GPIO.LOW)
@@ -33,8 +33,9 @@ while True:
         time.sleep(1)
         GPIO.output(YELLOW, GPIO.HIGH)
         GPIO.output(RED,GPIO.LOW)
-    except:
-        GPIO.output(RED, GPIO.HIGH)
-        GPIO.output(YELLOW, GPIO.HIGH)
-        GPIO.output(GREEN, GPIO.HIGH)
-        exit()
+except KeyboardInterrupt:
+    GPIO.output(RED, GPIO.HIGH)
+    GPIO.output(YELLOW, GPIO.HIGH)
+    GPIO.output(GREEN, GPIO.HIGH)
+    GPIO.cleanup() 
+      
