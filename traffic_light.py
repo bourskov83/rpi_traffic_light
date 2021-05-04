@@ -4,7 +4,7 @@ import time
 RED = 17
 YELLOW = 27
 GREEN = 22
-
+WAIT = 10
 
 # Pin Setup:
 GPIO.setmode(GPIO.BCM) # Broadcom pin-numbering scheme
@@ -21,16 +21,16 @@ GPIO.output(GREEN, GPIO.HIGH)
 try:
     while True:
         GPIO.output(RED,GPIO.LOW)
-        time.sleep(5)
+        time.sleep(WAIT)
         GPIO.output(YELLOW,GPIO.LOW)
-        time.sleep(2)
+        time.sleep(3)
         GPIO.output(GREEN,GPIO.LOW)
         GPIO.output(RED, GPIO.HIGH)
         GPIO.output(YELLOW, GPIO.HIGH)
-        time.sleep(5)
+        time.sleep(WAIT)
         GPIO.output(GREEN, GPIO.HIGH)
         GPIO.output(YELLOW, GPIO.LOW)
-        time.sleep(1)
+        time.sleep(5)
         GPIO.output(YELLOW, GPIO.HIGH)
         GPIO.output(RED,GPIO.LOW)
 except KeyboardInterrupt:
