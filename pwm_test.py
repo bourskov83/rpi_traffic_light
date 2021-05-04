@@ -2,7 +2,7 @@
 import RPi.GPIO as GPIO   # Import the GPIO library.
 import time               # Import time library
 
-GPIO.setmode(GPIO.BMC)  # Set Pi to use pin number when referencing GPIO pins.
+GPIO.setmode(GPIO.BCM)  # Set Pi to use pin number when referencing GPIO pins.
                           # Can use GPIO.setmode(GPIO.BCM) instead to use 
                           # Broadcom SOC channel names.
 
