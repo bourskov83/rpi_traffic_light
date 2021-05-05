@@ -47,7 +47,7 @@ if __name__ == '__main__':
 
             GPIO.output(RED,GPIO.LOW)
             future=pool.submit(delay(5))
-            print(future.done()
+            print(future.done())
             while future.done() == False:
                 print('wait for RED/YELLOW...')
                 time.sleep(0.1)
