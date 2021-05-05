@@ -13,6 +13,7 @@ def delay(seconds):
     return True
 
 def init_gpio():
+    print('Init GPIO')
     GPIO.setmode(GPIO.BCM) # Broadcom pin-numbering scheme
     GPIO.setup(RED, GPIO.OUT) # RED pin set as output
     GPIO.setup(YELLOW, GPIO.OUT) # YELLOW pin set as output
@@ -20,6 +21,7 @@ def init_gpio():
     return True
 
 def all_off():
+    print('All off...')
     GPIO.output(RED, GPIO.HIGH)
     GPIO.output(YELLOW, GPIO.HIGH)
     GPIO.output(GREEN, GPIO.HIGH)
@@ -40,6 +42,7 @@ if __name__ == '__main__':
 
     try:
         while True:
+            print('Start main loop...')
 
             GPIO.output(RED,GPIO.LOW)
             future=pool.submit(delay(5))
