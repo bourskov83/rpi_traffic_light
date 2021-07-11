@@ -5,9 +5,9 @@ import RPi.GPIO as GPIO
 SCAN_INTERVAL = 0.2
 #### GPIO assignments
 # OUTPUTs
-RED_LIGHT_LIGHT = 17
-YELLOW_LIGHT_LIGHT = 27
-GREEN_LIGHT_LIGHT = 22
+RED_LIGHT_LIGHT = 11
+YELLOW_LIGHT_LIGHT = 13
+GREEN_LIGHT_LIGHT = 15
 # INPUTs
 MODE = 1
 MANUAL_CHANGE = 1
@@ -19,7 +19,7 @@ GREEN_LIGHT_BUTTON = 1
 
 def init_gpio():
     print('Init GPIO')
-    GPIO.setmode(GPIO.BCM) # Broadcom pin-numbering scheme
+    GPIO.setmode(GPIO.BOARD) # Broadcom pin-numbering scheme
     GPIO.setup(RED_LIGHT, GPIO.OUT) # RED_LIGHT pin set as output
     GPIO.setup(YELLOW_LIGHT_LIGHT, GPIO.OUT) # YELLOW_LIGHT pin set as output
     GPIO.setup(GREEN_LIGHT_LIGHT, GPIO.OUT) # GREEN_LIGHT pin set as output
