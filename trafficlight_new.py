@@ -147,7 +147,7 @@ if __name__ == '__main__':
                 while DELAY_END == False and AUTO_MODE:
                     pass
                 print(input_state)
-            if not input_state[MODE]::
+            if not input_state[MODE]:
                 print("Manual Mode...")
 
 
