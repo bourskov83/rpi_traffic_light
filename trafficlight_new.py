@@ -61,6 +61,7 @@ def clean_gpio():
 
 
 def all_off():
+    global output_state
     print('All off...')
     GPIO.output(RED_LIGHT, GPIO.HIGH)
     GPIO.output(YELLOW_LIGHT, GPIO.HIGH)
@@ -75,6 +76,7 @@ def delay():
     DELAY_END = True
 
 def Update_Light(lights):
+    global output_state
     for light,state in lights.items():
         if state:
             GPIO.output(light,GPIO.LOW)
