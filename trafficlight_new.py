@@ -21,9 +21,6 @@ UPDATE_INTERVAL = .1
 inputs = [MODE,RED_LIGHT_BUTTON,YELLOW_LIGHT_BUTTON,GREEN_LIGHT_BUTTON,MANUAL_CHANGE]
 input_state = {}
 output_state = {}
-last_mode_auto = False
-manual_change = False
-manual_change_last_state = "RED"
 
 logger = logging.getLogger(__name__)
 logging.basicConfig(format='[%(name)s.%(funcName)-15s][%(levelname)-9s]%(filename)s:%(lineno)-4s:%(message)s')
@@ -89,10 +86,14 @@ def Update_Light(lights):
 # Main loop
 
 def run():
+    last_mode_auto = False
+    manual_change = False
+    manual_change_last = False
+    manual_change_last_state = "RED"
     init_gpio()
     all_off()
 
-    global input_state,output_state,manual_change,manual_change_last_state,last_mode_auto,UPDATE_INTERVAL
+    global input_state,output_state,UPDATE_INTERVAL
     try:
         while True:
             while input_state[MODE]:
@@ -136,6 +137,7 @@ def run():
                 if input_state[MANUAL_CHANGE]:
                     logger.info('Manual change started')
                     manual_change = True
+                    manual_change_last = True
                     if manual_change_last_state == "RED":
                         logger.debug('Start RED --> GREEN transition')
                         logger.debug('Turn on RED/YELLOW')
@@ -165,8 +167,9 @@ def run():
 
                 if input_state[RED_LIGHT_BUTTON] or input_state[YELLOW_LIGHT_BUTTON] or input_state[GREEN_LIGHT_BUTTON]:
                     manual_change = False
-                if not manual_change:
+                if not manual_change and manual_change_last:
                     logger.info('Manual color selected')
+                    manual_change_last = False
 
 
                 if not manual_change:
