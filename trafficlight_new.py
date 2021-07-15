@@ -35,7 +35,18 @@ def InputUpdate(channel):
         logger.debug(f"GPIO {channel}:On")
         input_state[channel]=True
 
-
+def Scan_Input(scan_interval):
+    logger.info('Thread started...')
+    global input_state,inputs
+    while True:
+        for channel in inputs:
+            if GPIO.input(channel):
+                logger.debug(f"GPIO {channel}:Off")
+                input_state[channel]=False
+            else:
+                logger.debug(f"GPIO {channel}:On")
+                input_state[channel]=True
+        time.sleep(scan_interval)
 
 def init_gpio():
     logger.info('Init GPIO')
@@ -47,7 +58,7 @@ def init_gpio():
     # Inputs
     for input in inputs:
         GPIO.setup(input, GPIO.IN, pull_up_down=GPIO.PUD_UP)
-        GPIO.add_event_detect(input, GPIO.BOTH, callback=InputUpdate, bouncetime=200)
+    #    GPIO.add_event_detect(input, GPIO.BOTH, callback=InputUpdate, bouncetime=200)
 
         # initialize input_state dict
         InputUpdate(input)
@@ -86,14 +97,17 @@ def Update_Light(lights):
 # Main loop
 
 def run():
+    global input_state,output_state,UPDATE_INTERVAL,SCAN_INTERVAL
+
     last_mode_auto = False
     manual_change = False
     manual_change_last = False
     manual_change_last_state = "RED"
     init_gpio()
     all_off()
+    scan_thread = threading.Thread(target=Scan_Input, args=(SCAN_INTERVAL,), daemon=True)
+    scan_thread.start()
 
-    global input_state,output_state,UPDATE_INTERVAL
     try:
         while True:
             while input_state[MODE]:
