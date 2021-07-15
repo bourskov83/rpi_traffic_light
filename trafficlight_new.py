@@ -118,6 +118,7 @@ if __name__ == '__main__':
 
     try:
         while True:
+            print(input_state)
 
             # Scan input
             # Update global registers
@@ -149,9 +150,10 @@ if __name__ == '__main__':
                 print("Manual Mode...")
 
         a+=1
-        if a = 10:
+
+        if a == 10:
             clean_gpio()
-            exit()        
+            exit()
 
     except KeyboardInterrupt:
         print("Exit...")
