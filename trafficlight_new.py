@@ -92,7 +92,7 @@ def run():
     init_gpio()
     all_off()
 
-
+    global input_state,output_state,manual_change,manual_change_last_state,last_mode_auto,UPDATE_INTERVAL
     try:
         while True:
             while input_state[MODE]:
