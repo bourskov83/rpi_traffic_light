@@ -163,7 +163,7 @@ if __name__ == '__main__':
                         Update_Light({RED_LIGHT:True,YELLOW_LIGHT:True,GREEN_LIGHT:False})
                         t_start=time.time()
 
-                        while (time.time() <= t_start+3) and input_state[MODE]:
+                        while (time.time() <= t_start+3):
                             time.sleep(UPDATE_INTERVAL)
 
                         Update_Light({RED_LIGHT:False,YELLOW_LIGHT:False,GREEN_LIGHT:True})
@@ -172,7 +172,7 @@ if __name__ == '__main__':
                     elif manual_change_last_state == "GREEN":
                         Update_Light({RED_LIGHT:False,YELLOW_LIGHT:True,GREEN_LIGHT:False})
                         t_start=time.time()
-                        while (time.time() <= t_start+4) and input_state[MODE]:
+                        while (time.time() <= t_start+4):
                             time.sleep(UPDATE_INTERVAL)
                         Update_Light({RED_LIGHT:True,YELLOW_LIGHT:False,GREEN_LIGHT:False})
 
