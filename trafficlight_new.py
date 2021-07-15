@@ -21,11 +21,12 @@ input_state = {}
 
 def InputUpdate(channel):
     if GPIO.input(channel):
-        print(f"GPIO {channel} is true")
-    else:
-        print(f"GPIO {channel} is false")
+        print(f"GPIO {channel}:Off")
+        input_state[channel]=False
 
-    input_state[channel]=GPIO.input(channel)
+    else:
+        print(f"GPIO {channel}:On")
+        input_state[channel]=True
 
 def InputOff(channel):
     print(f"GPIO {channel} is Off")
@@ -44,6 +45,10 @@ def init_gpio():
     for input in inputs:
         GPIO.setup(input, GPIO.IN, pull_up_down=GPIO.PUD_UP)
         GPIO.add_event_detect(input, GPIO.BOTH, callback=InputUpdate, bouncetime=100)
+
+        # initialize input_state dict
+        InputUpdate(input)
+
 
 #    GPIO.setup(MANUAL_CHANGE, GPIO.IN, pull_up_down=GPIO.PUD_UP)
 #    GPIO.setup(RED_LIGHT_BUTTON, GPIO.IN, pull_up_down=GPIO.PUD_UP)
@@ -94,7 +99,7 @@ def Start_Delay(amount):
     t.start()
 
 
-AUTO_MODE = True
+AUTO_MODE = input_state.get(MODE)
 DELAY_END = False
 
 
