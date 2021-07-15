@@ -126,7 +126,7 @@ if __name__ == '__main__':
 
             # AUTO mode
             # change lights with threading.Timer
-            while AUTO_MODE:
+            while input_state[MODE]:
                 Update_Light({RED_LIGHT:True,YELLOW_LIGHT:False,GREEN_LIGHT:False})
                 Start_Delay(10)
                 while DELAY_END == False and AUTO_MODE:
@@ -147,14 +147,9 @@ if __name__ == '__main__':
                 while DELAY_END == False and AUTO_MODE:
                     pass
                 print(input_state)
-            if not AUTO_MODE:
+            if not input_state[MODE]::
                 print("Manual Mode...")
 
-        a+=1
-
-        if a == 10:
-            clean_gpio()
-            exit()
 
     except KeyboardInterrupt:
         print("Exit...")
