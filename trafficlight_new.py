@@ -99,7 +99,7 @@ def Start_Delay(amount):
     t.start()
 
 
-AUTO_MODE = input_state.get(MODE)
+AUTO_MODE = input_state[MODE]
 DELAY_END = False
 
 
