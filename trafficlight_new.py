@@ -15,10 +15,18 @@ RED_LIGHT_BUTTON = 33
 YELLOW_LIGHT_BUTTON = 35
 GREEN_LIGHT_BUTTON = 37
 
-inputs = {}
 
-def input_update(channel):
-    print(f"GPIO {channel} changed state")
+inputs = [MODE]
+input_state = {}
+
+def InputOn(channel):
+    print(f"GPIO {channel} is On")
+    input_state[channel]:True
+
+def InputOff(channel):
+    print(f"GPIO {channel} is Off")
+    input_state[channel]:False
+
 
 
 def init_gpio():
@@ -29,13 +37,16 @@ def init_gpio():
     GPIO.setup(GREEN_LIGHT, GPIO.OUT) # GREEN_LIGHT pin set as output
 
     # Inputs
-    GPIO.setup(MODE, GPIO.IN, pull_up_down=GPIO.PUD_UP)
+    for input in inputs:
+    GPIO.setup(input, GPIO.IN, pull_up_down=GPIO.PUD_UP)
+    GPIO.add_event_detect(MODE, GPIO.FALLING, callback=InputOn, bouncetime=100)
+    GPIO.add_event_detect(MODE, GPIO.RISING, callback=InputOff, bouncetime=100)
+
 #    GPIO.setup(MANUAL_CHANGE, GPIO.IN, pull_up_down=GPIO.PUD_UP)
 #    GPIO.setup(RED_LIGHT_BUTTON, GPIO.IN, pull_up_down=GPIO.PUD_UP)
 #    GPIO.setup(YELLOW_LIGHT_BUTTON, GPIO.IN, pull_up_down=GPIO.PUD_UP)
 #    GPIO.setup(GREEN_LIGHT_BUTTON, GPIO.IN, pull_up_down=GPIO.PUD_UP)
 
-    GPIO.add_event_detect(MODE, GPIO.BOTH, callback=input_update, bouncetime=100)
     return True
 
 def clean_gpio():
@@ -123,7 +134,7 @@ if __name__ == '__main__':
                 Start_Delay(4)
                 while DELAY_END == False and AUTO_MODE:
                     pass
-
+                print(input_state)
             if not AUTO_MODE:
                 print("Manual Mode...")
 
