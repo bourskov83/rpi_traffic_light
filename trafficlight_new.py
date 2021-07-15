@@ -149,6 +149,10 @@ if __name__ == '__main__':
                 print(input_state)
             if not input_state[MODE]:
                 print("Manual Mode...")
+                print(f"RED:{GPIO.output(RED_LIGHT)}")
+                print(f"YELLOW:{GPIO.output(YELLOW_LIGHT)}")
+                print(f"GREEN:{GPIO.output(GREEN_LIGHT)}")
+                time.sleep(.2)
 
 
     except KeyboardInterrupt:
