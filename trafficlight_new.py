@@ -3,14 +3,14 @@ import time
 import RPi.GPIO as GPIO
 import logging
 
-SCAN_INTERVAL = 0.2
+SCAN_INTERVAL = 0.1
 #### GPIO assignments
 # OUTPUTs
 RED_LIGHT = 11
 YELLOW_LIGHT = 13
 GREEN_LIGHT = 15
 # INPUTs
-MODE = 12
+AUTO_MODE = 12
 MANUAL_CHANGE = 24
 RED_LIGHT_BUTTON = 16
 YELLOW_LIGHT_BUTTON = 18
@@ -18,7 +18,7 @@ GREEN_LIGHT_BUTTON = 22
 
 UPDATE_INTERVAL = .1
 
-inputs = [MODE,RED_LIGHT_BUTTON,YELLOW_LIGHT_BUTTON,GREEN_LIGHT_BUTTON,MANUAL_CHANGE]
+inputs = [AUTO_MODE,RED_LIGHT_BUTTON,YELLOW_LIGHT_BUTTON,GREEN_LIGHT_BUTTON,MANUAL_CHANGE]
 input_state = {}
 output_state = {}
 
@@ -38,14 +38,20 @@ def InputUpdate(channel):
 def Scan_Input(scan_interval):
     logger.info('Thread started...')
     global input_state,inputs
+    last_input = {}
+    for channel in inputs:
+        last_input[channel] = None
+
     while True:
         for channel in inputs:
-            if GPIO.input(channel):
-                logger.debug(f"GPIO {channel}:Off")
-                input_state[channel]=False
-            else:
-                logger.debug(f"GPIO {channel}:On")
-                input_state[channel]=True
+            if last_input[channel] != GPIO.input(channel):
+                last_input[channel]=GPIO.input(channel)
+                if GPIO.input(channel):
+                    logger.debug(f"GPIO {channel}:Off")
+                    input_state[channel]=False
+                else:
+                    logger.debug(f"GPIO {channel}:On")
+                    input_state[channel]=True
         time.sleep(scan_interval)
 
 def init_gpio():
@@ -110,40 +116,40 @@ def run():
 
     try:
         while True:
-            while input_state[MODE]:
+            while input_state[AUTO_MODE]:
                 logger.debug('In AUTOMODE')
                 last_mode_auto = True
                 logger.debug('Turn on RED')
                 Update_Light({RED_LIGHT:True,YELLOW_LIGHT:False,GREEN_LIGHT:False})
                 t_start=time.time()
                 logger.debug('Wait for RED/YELLOW')
-                while (time.time() <= t_start+10) and input_state[MODE]:
+                while (time.time() <= t_start+10) and input_state[AUTO_MODE]:
                     time.sleep(UPDATE_INTERVAL)
-                if input_state[MODE]:
+                if input_state[AUTO_MODE]:
                     logger.debug('Turn on RED/YELLOW')
                     Update_Light({RED_LIGHT:True,YELLOW_LIGHT:True,GREEN_LIGHT:False})
                     t_start=time.time()
                     logger.debug('Wait for GREEN')
-                    while (time.time() <= t_start+3) and input_state[MODE]:
+                    while (time.time() <= t_start+3) and input_state[AUTO_MODE]:
                         time.sleep(UPDATE_INTERVAL)
-                if input_state[MODE]:
+                if input_state[AUTO_MODE]:
                     logger.debug('Turn on GREEN')
                     Update_Light({RED_LIGHT:False,YELLOW_LIGHT:False,GREEN_LIGHT:True})
                     t_start=time.time()
                     logger.debug('Wait for YELLOW')
 
-                    while (time.time() <= t_start+10) and input_state[MODE]:
+                    while (time.time() <= t_start+10) and input_state[AUTO_MODE]:
                         time.sleep(UPDATE_INTERVAL)
-                if input_state[MODE]:
+                if input_state[AUTO_MODE]:
                     logger.debug('Turn on YELLOW')
                     Update_Light({RED_LIGHT:False,YELLOW_LIGHT:True,GREEN_LIGHT:False})
                     t_start=time.time()
                     logger.debug('Wait for RED')
 
-                    while (time.time() <= t_start+4) and input_state[MODE]:
+                    while (time.time() <= t_start+4) and input_state[AUTO_MODE]:
                         time.sleep(UPDATE_INTERVAL)
                 logger.debug(f"Input state: {input_state}")
-            if not input_state[MODE]:
+            if not input_state[AUTO_MODE]:
                 if last_mode_auto == True:
                     logger.info('Starting manual mode')
                     all_off()
