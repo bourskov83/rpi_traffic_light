@@ -11,14 +11,17 @@ GREEN_LIGHT = 15
 # INPUTs
 MODE = 12
 MANUAL_CHANGE = 31
-RED_LIGHT_BUTTON = 33
-YELLOW_LIGHT_BUTTON = 35
-GREEN_LIGHT_BUTTON = 37
+RED_LIGHT_BUTTON = 16
+YELLOW_LIGHT_BUTTON = 18
+GREEN_LIGHT_BUTTON = 19
 
 UPDATE_INTERVAL = .1
 
-inputs = [MODE]
+inputs = [MODE,RED_LIGHT_BUTTON,YELLOW_LIGHT_BUTTON,GREEN_LIGHT_BUTTON]
 input_state = {}
+output_state = {}
+last_mode = False
+
 
 def InputUpdate(channel):
     if GPIO.input(channel):
@@ -50,12 +53,6 @@ def init_gpio():
         # initialize input_state dict
         InputUpdate(input)
 
-
-#    GPIO.setup(MANUAL_CHANGE, GPIO.IN, pull_up_down=GPIO.PUD_UP)
-#    GPIO.setup(RED_LIGHT_BUTTON, GPIO.IN, pull_up_down=GPIO.PUD_UP)
-#    GPIO.setup(YELLOW_LIGHT_BUTTON, GPIO.IN, pull_up_down=GPIO.PUD_UP)
-#    GPIO.setup(GREEN_LIGHT_BUTTON, GPIO.IN, pull_up_down=GPIO.PUD_UP)
-
     return True
 
 def clean_gpio():
@@ -68,6 +65,7 @@ def all_off():
     GPIO.output(RED_LIGHT, GPIO.HIGH)
     GPIO.output(YELLOW_LIGHT, GPIO.HIGH)
     GPIO.output(GREEN_LIGHT, GPIO.HIGH)
+    output_state = {RED_LIGHT:False,YELLOW_LIGHT,False,GREEN_LIGHT:False}
     return True
 
 
@@ -79,11 +77,11 @@ def delay():
 def Update_Light(lights):
     for light,state in lights.items():
         if state:
-            pass
             GPIO.output(light,GPIO.LOW)
+            output_state[light:True]
         else:
-            pass
             GPIO.output(light,GPIO.HIGH)
+            output_state[light:False]
         print(f"{light}:{state}")
 
 def Scan_Input(scan_interval):
@@ -128,6 +126,7 @@ if __name__ == '__main__':
             # AUTO mode
             # change lights with threading.Timer
             while input_state[MODE]:
+                last_mode = True
                 Update_Light({RED_LIGHT:True,YELLOW_LIGHT:False,GREEN_LIGHT:False})
                 t_start=time.time()
                 while (time.time() <= t_start+10) and input_state[MODE]:
@@ -153,10 +152,18 @@ if __name__ == '__main__':
                         time.sleep(UPDATE_INTERVAL)
                 print(input_state)
             if not input_state[MODE]:
-            #    print("Manual Mode...")
-            #    print(f"RED:{GPIO.input(RED_LIGHT)}")
-            #    print(f"YELLOW:{GPIO.input(YELLOW_LIGHT)}")
-            #    print(f"GREEN:{GPIO.input(GREEN_LIGHT)}")
+                if last_mode = True:
+                    all_off()
+                    last_mode = False
+
+                if not input_state[RED_LIGHT_BUTTON] == output_state[RED_LIGHT]:
+                    Update_Light(RED_LIGHT:input_state[RED_LIGHT_BUTTON])
+                if not input_state[YELLOW_LIGHT_BUTTON] == output_state[YELLOW_LIGHT]:
+                    Update_Light(YELLOW_LIGHT:input_state[YELLOW_LIGHT_BUTTON])
+                if not input_state[GREEN_LIGHT_BUTTON] == output_state[GREEN_LIGHT]:
+                    Update_Light(GREEN_LIGHT:input_state[GREEN_LIGHT_BUTTON])
+                    
+
                 time.sleep(.2)
 
 
