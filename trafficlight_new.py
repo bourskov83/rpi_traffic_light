@@ -56,6 +56,7 @@ def Scan_Input(scan_interval):
         time.sleep(scan_interval)
 
 def init_gpio():
+    global input_state
     logger.info('Init GPIO')
     GPIO.setmode(GPIO.BOARD) # Broadcom pin-numbering scheme
 
@@ -69,6 +70,7 @@ def init_gpio():
     # Inputs
     for input in inputs:
         GPIO.setup(input, GPIO.IN, pull_up_down=GPIO.PUD_UP)
+        input_state[input]=None
     #    GPIO.add_event_detect(input, GPIO.BOTH, callback=InputUpdate, bouncetime=200)
 
         # initialize input_state dict
@@ -87,7 +89,7 @@ def all_off():
     for output in outputs:
         GPIO.output(output, GPIO.HIGH)
         output_state[output]=False
-        
+
     #GPIO.output(RED_LIGHT, GPIO.HIGH)
     #GPIO.output(YELLOW_LIGHT, GPIO.HIGH)
     #GPIO.output(GREEN_LIGHT, GPIO.HIGH)
