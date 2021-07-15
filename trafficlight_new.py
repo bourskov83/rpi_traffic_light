@@ -157,11 +157,11 @@ if __name__ == '__main__':
                     last_mode = False
 
                 if not input_state[RED_LIGHT_BUTTON] == output_state[RED_LIGHT]:
-                    Update_Light(RED_LIGHT:input_state[RED_LIGHT_BUTTON])
+                    Update_Light({RED_LIGHT:input_state[RED_LIGHT_BUTTON]})
                 if not input_state[YELLOW_LIGHT_BUTTON] == output_state[YELLOW_LIGHT]:
-                    Update_Light(YELLOW_LIGHT:input_state[YELLOW_LIGHT_BUTTON])
+                    Update_Light({YELLOW_LIGHT:input_state[YELLOW_LIGHT_BUTTON]})
                 if not input_state[GREEN_LIGHT_BUTTON] == output_state[GREEN_LIGHT]:
-                    Update_Light(GREEN_LIGHT:input_state[GREEN_LIGHT_BUTTON])
+                    Update_Light({GREEN_LIGHT:input_state[GREEN_LIGHT_BUTTON]})
 
 
                 time.sleep(.2)
