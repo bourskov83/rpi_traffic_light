@@ -95,6 +95,7 @@ def Scan_Input(scan_interval):
 def Start_Delay(amount):
     global DELAY_END
     DELAY_END = False
+    t = None
     t = threading.Timer(amount, delay)
     t.start()
 
