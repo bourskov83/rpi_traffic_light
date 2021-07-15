@@ -5,24 +5,37 @@ import RPi.GPIO as GPIO
 SCAN_INTERVAL = 0.2
 #### GPIO assignments
 # OUTPUTs
-RED_LIGHT_LIGHT = 11
-YELLOW_LIGHT_LIGHT = 13
-GREEN_LIGHT_LIGHT = 15
+RED_LIGHT = 11
+YELLOW_LIGHT = 13
+GREEN_LIGHT = 15
 # INPUTs
-MODE = 1
-MANUAL_CHANGE = 1
-RED_LIGHT_BUTTON = 1
-YELLOW_LIGHT_BUTTON = 1
-GREEN_LIGHT_BUTTON = 1
+MODE = 29
+MANUAL_CHANGE = 31
+RED_LIGHT_BUTTON = 33
+YELLOW_LIGHT_BUTTON = 35
+GREEN_LIGHT_BUTTON = 37
 
+inputs = {}
+
+def input_update(channel):
+    print(f"GPIO {channel} changed state")
 
 
 def init_gpio():
     print('Init GPIO')
     GPIO.setmode(GPIO.BOARD) # Broadcom pin-numbering scheme
     GPIO.setup(RED_LIGHT, GPIO.OUT) # RED_LIGHT pin set as output
-    GPIO.setup(YELLOW_LIGHT_LIGHT, GPIO.OUT) # YELLOW_LIGHT pin set as output
-    GPIO.setup(GREEN_LIGHT_LIGHT, GPIO.OUT) # GREEN_LIGHT pin set as output
+    GPIO.setup(YELLOW_LIGHT, GPIO.OUT) # YELLOW_LIGHT pin set as output
+    GPIO.setup(GREEN_LIGHT, GPIO.OUT) # GREEN_LIGHT pin set as output
+
+    # Inputs
+    GPIO.setup(MODE, GPIO.IN, pull_up_down=GPIO.PUD_UP)
+    GPIO.setup(MANUAL_CHANGE, GPIO.IN, pull_up_down=GPIO.PUD_UP)
+    GPIO.setup(RED_LIGHT_BUTTON, GPIO.IN, pull_up_down=GPIO.PUD_UP)
+    GPIO.setup(YELLOW_LIGHT_BUTTON, GPIO.IN, pull_up_down=GPIO.PUD_UP)
+    GPIO.setup(GREEN_LIGHT_BUTTON, GPIO.IN, pull_up_down=GPIO.PUD_UP)
+
+    GPIO.add_event_detect(MODE, GPIO.BOTH, callback=input_update, bouncetime=100)
     return True
 
 def clean_gpio():
@@ -33,8 +46,8 @@ def clean_gpio():
 def all_off():
     print('All off...')
     GPIO.output(RED_LIGHT, GPIO.HIGH)
-    GPIO.output(YELLOW_LIGHT_LIGHT, GPIO.HIGH)
-    GPIO.output(GREEN_LIGHT_LIGHT, GPIO.HIGH)
+    GPIO.output(YELLOW_LIGHT, GPIO.HIGH)
+    GPIO.output(GREEN_LIGHT, GPIO.HIGH)
     return True
 
 
@@ -79,8 +92,8 @@ if __name__ == '__main__':
     init_gpio()
     all_off()
 
-    scan_thread = threading.Thread(target=Scan_Input, args=(SCAN_INTERVAL,), daemon=True)
-    scan_thread.start()
+#    scan_thread = threading.Thread(target=Scan_Input, args=(SCAN_INTERVAL,), daemon=True)
+#    scan_thread.start()
 
     try:
         while True:
@@ -91,22 +104,22 @@ if __name__ == '__main__':
             # AUTO mode
             # change lights with threading.Timer
             while AUTO_MODE:
-                Update_Light({'RED_LIGHT':True,'YELLOW_LIGHT':False,'GREEN_LIGHT':False})
+                Update_Light({RED_LIGHT:True,YELLOW_LIGHT:False,GREEN_LIGHT:False})
                 Start_Delay(10)
                 while DELAY_END == False and AUTO_MODE:
                     pass
                 print("\n")
-                Update_Light({'RED_LIGHT':True,'YELLOW_LIGHT':True,'GREEN_LIGHT':False})
+                Update_Light({RED_LIGHT:True,YELLOW_LIGHT:True,GREEN_LIGHT:False})
                 Start_Delay(3)
                 while DELAY_END == False and AUTO_MODE:
                     pass
                 print("\n")
-                Update_Light({'RED_LIGHT':False,'YELLOW_LIGHT':False,'GREEN_LIGHT':True})
+                Update_Light({RED_LIGHT:False,YELLOW_LIGHT:False,GREEN_LIGHT:True})
                 Start_Delay(10)
                 while DELAY_END == False and AUTO_MODE:
                     pass
                 print("\n")
-                Update_Light({'RED_LIGHT':False,'YELLOW_LIGHT':True,'GREEN_LIGHT':False})
+                Update_Light({RED_LIGHT:False,YELLOW_LIGHT:True,GREEN_LIGHT:False})
                 Start_Delay(4)
                 while DELAY_END == False and AUTO_MODE:
                     pass
@@ -117,3 +130,4 @@ if __name__ == '__main__':
 
     except KeyboardInterrupt:
         print("Exit...")
+        clean_gpio()
