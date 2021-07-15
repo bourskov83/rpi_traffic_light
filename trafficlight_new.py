@@ -20,8 +20,12 @@ inputs = [MODE]
 input_state = {}
 
 def InputUpdate(channel):
-    print(f"GPIO {channel} is {GPIO.input(channel)}")
-    input_state[channel]:GPIO.input(channel)
+    if GPIO.input(channel):
+        print(f"GPIO {channel} is true")
+    else:
+        print(f"GPIO {channel} is false")
+
+    input_state[channel]=GPIO.input(channel)
 
 def InputOff(channel):
     print(f"GPIO {channel} is Off")
