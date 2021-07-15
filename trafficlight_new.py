@@ -80,10 +80,10 @@ def Update_Light(lights):
     for light,state in lights.items():
         if state:
             GPIO.output(light,GPIO.LOW)
-            output_state[light:True]
+            output_state[light]=True
         else:
             GPIO.output(light,GPIO.HIGH)
-            output_state[light:False]
+            output_state[light]=False
         print(f"{light}:{state}")
 
 def Scan_Input(scan_interval):
