@@ -19,9 +19,9 @@ GREEN_LIGHT_BUTTON = 37
 inputs = [MODE]
 input_state = {}
 
-def InputOn(channel):
-    print(f"GPIO {channel} is On")
-    input_state[channel]:True
+def InputUpdate(channel):
+    print(f"GPIO {channel} is {GPIO.input(channel)}")
+    input_state[channel]:GPIO.input(channel)
 
 def InputOff(channel):
     print(f"GPIO {channel} is Off")
@@ -39,8 +39,7 @@ def init_gpio():
     # Inputs
     for input in inputs:
         GPIO.setup(input, GPIO.IN, pull_up_down=GPIO.PUD_UP)
-        GPIO.add_event_detect(MODE, GPIO.FALLING, callback=InputOn, bouncetime=100)
-        GPIO.add_event_detect(MODE, GPIO.RISING, callback=InputOff, bouncetime=100)
+        GPIO.add_event_detect(input, GPIO.BOTH, callback=InputOn, bouncetime=100)
 
 #    GPIO.setup(MANUAL_CHANGE, GPIO.IN, pull_up_down=GPIO.PUD_UP)
 #    GPIO.setup(RED_LIGHT_BUTTON, GPIO.IN, pull_up_down=GPIO.PUD_UP)
