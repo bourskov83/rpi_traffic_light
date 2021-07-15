@@ -19,6 +19,7 @@ GREEN_LIGHT_BUTTON = 22
 UPDATE_INTERVAL = .1
 
 inputs = [AUTO_MODE,RED_LIGHT_BUTTON,YELLOW_LIGHT_BUTTON,GREEN_LIGHT_BUTTON,MANUAL_CHANGE]
+outputs = [RED_LIGHT,YELLOW_LIGHT,GREEN_LIGHT]
 input_state = {}
 output_state = {}
 
@@ -57,9 +58,13 @@ def Scan_Input(scan_interval):
 def init_gpio():
     logger.info('Init GPIO')
     GPIO.setmode(GPIO.BOARD) # Broadcom pin-numbering scheme
-    GPIO.setup(RED_LIGHT, GPIO.OUT) # RED_LIGHT pin set as output
-    GPIO.setup(YELLOW_LIGHT, GPIO.OUT) # YELLOW_LIGHT pin set as output
-    GPIO.setup(GREEN_LIGHT, GPIO.OUT) # GREEN_LIGHT pin set as output
+
+    for output in outputs:
+        GPIO.setup(output, GPIO.OUT)
+
+    #GPIO.setup(RED_LIGHT, GPIO.OUT) # RED_LIGHT pin set as output
+    #GPIO.setup(YELLOW_LIGHT, GPIO.OUT) # YELLOW_LIGHT pin set as output
+    #GPIO.setup(GREEN_LIGHT, GPIO.OUT) # GREEN_LIGHT pin set as output
 
     # Inputs
     for input in inputs:
@@ -67,7 +72,7 @@ def init_gpio():
     #    GPIO.add_event_detect(input, GPIO.BOTH, callback=InputUpdate, bouncetime=200)
 
         # initialize input_state dict
-        InputUpdate(input)
+        #InputUpdate(input)
 
     return True
 
@@ -79,10 +84,14 @@ def clean_gpio():
 def all_off():
     global output_state
     logger.info('Set all configured GPIO output to off...')
-    GPIO.output(RED_LIGHT, GPIO.HIGH)
-    GPIO.output(YELLOW_LIGHT, GPIO.HIGH)
-    GPIO.output(GREEN_LIGHT, GPIO.HIGH)
-    output_state = {RED_LIGHT:False,YELLOW_LIGHT:False,GREEN_LIGHT:False}
+    for output in outputs:
+        GPIO.output(output, GPIO.HIGH)
+        output_state[output]=False
+        
+    #GPIO.output(RED_LIGHT, GPIO.HIGH)
+    #GPIO.output(YELLOW_LIGHT, GPIO.HIGH)
+    #GPIO.output(GREEN_LIGHT, GPIO.HIGH)
+    #output_state = {RED_LIGHT:False,YELLOW_LIGHT:False,GREEN_LIGHT:False}
     return True
 
 
