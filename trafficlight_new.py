@@ -9,7 +9,7 @@ RED_LIGHT = 11
 YELLOW_LIGHT = 13
 GREEN_LIGHT = 15
 # INPUTs
-MODE = 29
+MODE = 12
 MANUAL_CHANGE = 31
 RED_LIGHT_BUTTON = 33
 YELLOW_LIGHT_BUTTON = 35
@@ -30,10 +30,10 @@ def init_gpio():
 
     # Inputs
     GPIO.setup(MODE, GPIO.IN, pull_up_down=GPIO.PUD_UP)
-    GPIO.setup(MANUAL_CHANGE, GPIO.IN, pull_up_down=GPIO.PUD_UP)
-    GPIO.setup(RED_LIGHT_BUTTON, GPIO.IN, pull_up_down=GPIO.PUD_UP)
-    GPIO.setup(YELLOW_LIGHT_BUTTON, GPIO.IN, pull_up_down=GPIO.PUD_UP)
-    GPIO.setup(GREEN_LIGHT_BUTTON, GPIO.IN, pull_up_down=GPIO.PUD_UP)
+#    GPIO.setup(MANUAL_CHANGE, GPIO.IN, pull_up_down=GPIO.PUD_UP)
+#    GPIO.setup(RED_LIGHT_BUTTON, GPIO.IN, pull_up_down=GPIO.PUD_UP)
+#    GPIO.setup(YELLOW_LIGHT_BUTTON, GPIO.IN, pull_up_down=GPIO.PUD_UP)
+#    GPIO.setup(GREEN_LIGHT_BUTTON, GPIO.IN, pull_up_down=GPIO.PUD_UP)
 
     GPIO.add_event_detect(MODE, GPIO.BOTH, callback=input_update, bouncetime=100)
     return True
