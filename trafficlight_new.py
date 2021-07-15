@@ -128,23 +128,33 @@ if __name__ == '__main__':
             # change lights with threading.Timer
             while input_state[MODE]:
                 Update_Light({RED_LIGHT:True,YELLOW_LIGHT:False,GREEN_LIGHT:False})
-                Start_Delay(10)
-                while DELAY_END == False and input_state[MODE]:
+                t_start=time.time()
+                #Start_Delay(10)
+                print(t_start)
+                while (time.time() <= t_start+10) and input_state[MODE]:
                     pass
                 print("\n")
                 Update_Light({RED_LIGHT:True,YELLOW_LIGHT:True,GREEN_LIGHT:False})
-                Start_Delay(3)
-                while DELAY_END == False and input_state[MODE]:
+                #Start_Delay(3)
+                t_start=time.time()
+
+                print(t_start)
+                while (time.time() <= t_start+3) and input_state[MODE]:
                     pass
                 print("\n")
                 Update_Light({RED_LIGHT:False,YELLOW_LIGHT:False,GREEN_LIGHT:True})
-                Start_Delay(10)
-                while DELAY_END == False and input_state[MODE]:
+                t_start=time.time()
+
+                #Start_Delay(10)
+                print(t_start)
+                while (time.time() <= t_start+10) and input_state[MODE]:
                     pass
                 print("\n")
                 Update_Light({RED_LIGHT:False,YELLOW_LIGHT:True,GREEN_LIGHT:False})
-                Start_Delay(4)
-                while DELAY_END == False and input_state[MODE]:
+                t_start=time.time()
+                #Start_Delay(4)
+                print(t_start)
+                while (time.time() <= t_start+4) and input_state[MODE]:
                     pass
                 print(input_state)
             if not input_state[MODE]:
