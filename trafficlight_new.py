@@ -23,7 +23,7 @@ outputs = [RED_LIGHT,YELLOW_LIGHT,GREEN_LIGHT]
 input_state = {}
 output_state = {}
 
-logger = logging.getLogger(__name__)
+logger = logging.getLogger("TRAFFICLIGHT")
 logging.basicConfig(format='[%(name)s.%(funcName)-15s][%(levelname)-9s]%(filename)s:%(lineno)-4s:%(message)s')
 logger.setLevel(logging.DEBUG)
 
@@ -193,7 +193,7 @@ def run():
                             time.sleep(UPDATE_INTERVAL)
                         logger.debug('Turn on RED')
                         Update_Light({RED_LIGHT:True,YELLOW_LIGHT:False,GREEN_LIGHT:False})
-
+                        manual_change_last_state = "RED"
 
 
                 if input_state[RED_LIGHT_BUTTON] or input_state[YELLOW_LIGHT_BUTTON] or input_state[GREEN_LIGHT_BUTTON]:
