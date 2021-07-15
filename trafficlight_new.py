@@ -88,8 +88,7 @@ def Update_Light(lights):
 
 # Main loop
 
-if __name__ == '__main__':
-
+def run():
     init_gpio()
     all_off()
 
@@ -185,3 +184,6 @@ if __name__ == '__main__':
     except KeyboardInterrupt:
         print("Exit...")
         clean_gpio()
+
+if __name__ == '__main__':
+    run()
