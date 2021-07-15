@@ -26,7 +26,7 @@ manual_change = False
 manual_change_last_state = "RED"
 
 logger = logging.getLogger(__name__)
-logger.basicConfig(format='[%(name)s.%(funcName)-15s][%(levelname)-9s]%(filename)s:%(lineno)-4s:%(message)s')
+logging.basicConfig(format='[%(name)s.%(funcName)-15s][%(levelname)-9s]%(filename)s:%(lineno)-4s:%(message)s')
 logger.setLevel(logging.DEBUG)
 
 def InputUpdate(channel):
