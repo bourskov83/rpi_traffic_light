@@ -25,7 +25,7 @@ last_mode_auto = False
 manual_change = False
 manual_change_last_state = "RED"
 
-logger = logging.getLogger(__name__)
+logger = logging.getLogger("__main__")
 logging.basicConfig(format='[%(name)s.%(funcName)-15s][%(levelname)-9s]%(filename)s:%(lineno)-4s:%(message)s')
 logger.setLevel(logging.DEBUG)
 
@@ -83,7 +83,7 @@ def Update_Light(lights):
         else:
             GPIO.output(light,GPIO.HIGH)
             output_state[light]=False
-        logger.debug(f"{light}:{state}")
+        logger.debug(f"GPIO {light}: STATE:{state}")
 
 
 # Main loop
@@ -179,7 +179,7 @@ if __name__ == '__main__':
                         Update_Light({GREEN_LIGHT:input_state[GREEN_LIGHT_BUTTON]})
 
 
-                time.sleep(.2)
+                time.sleep(UPDATE_INTERVAL)
 
 
     except KeyboardInterrupt:
