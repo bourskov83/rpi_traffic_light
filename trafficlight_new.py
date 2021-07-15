@@ -132,7 +132,7 @@ if __name__ == '__main__':
                 #Start_Delay(10)
                 print(t_start)
                 while (time.time() <= t_start+10) and input_state[MODE]:
-                    pass
+                    time.sleep(.2)
                 print("\n")
                 Update_Light({RED_LIGHT:True,YELLOW_LIGHT:True,GREEN_LIGHT:False})
                 #Start_Delay(3)
@@ -140,7 +140,7 @@ if __name__ == '__main__':
 
                 print(t_start)
                 while (time.time() <= t_start+3) and input_state[MODE]:
-                    pass
+                    time.sleep(.2)
                 print("\n")
                 Update_Light({RED_LIGHT:False,YELLOW_LIGHT:False,GREEN_LIGHT:True})
                 t_start=time.time()
@@ -148,14 +148,14 @@ if __name__ == '__main__':
                 #Start_Delay(10)
                 print(t_start)
                 while (time.time() <= t_start+10) and input_state[MODE]:
-                    pass
+                    time.sleep(.2)
                 print("\n")
                 Update_Light({RED_LIGHT:False,YELLOW_LIGHT:True,GREEN_LIGHT:False})
                 t_start=time.time()
                 #Start_Delay(4)
                 print(t_start)
                 while (time.time() <= t_start+4) and input_state[MODE]:
-                    pass
+                    time.sleep(.2)
                 print(input_state)
             if not input_state[MODE]:
                 print("Manual Mode...")
