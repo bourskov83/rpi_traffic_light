@@ -43,7 +43,7 @@ def init_gpio():
     # Inputs
     for input in inputs:
         GPIO.setup(input, GPIO.IN, pull_up_down=GPIO.PUD_UP)
-        GPIO.add_event_detect(input, GPIO.BOTH, callback=InputOn, bouncetime=100)
+        GPIO.add_event_detect(input, GPIO.BOTH, callback=InputUpdate, bouncetime=100)
 
 #    GPIO.setup(MANUAL_CHANGE, GPIO.IN, pull_up_down=GPIO.PUD_UP)
 #    GPIO.setup(RED_LIGHT_BUTTON, GPIO.IN, pull_up_down=GPIO.PUD_UP)
