@@ -152,7 +152,7 @@ if __name__ == '__main__':
                         time.sleep(UPDATE_INTERVAL)
                 print(input_state)
             if not input_state[MODE]:
-                if last_mode = True:
+                if last_mode == True:
                     all_off()
                     last_mode = False
 
