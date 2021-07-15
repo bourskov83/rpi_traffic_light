@@ -99,7 +99,6 @@ def Start_Delay(amount):
     t.start()
 
 
-AUTO_MODE = input_state[MODE]
 DELAY_END = False
 
 
@@ -110,6 +109,8 @@ if __name__ == '__main__':
 
     init_gpio()
     all_off()
+    AUTO_MODE = input_state[MODE]
+
 
 #    scan_thread = threading.Thread(target=Scan_Input, args=(SCAN_INTERVAL,), daemon=True)
 #    scan_thread.start()
