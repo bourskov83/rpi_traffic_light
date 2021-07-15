@@ -15,6 +15,7 @@ RED_LIGHT_BUTTON = 33
 YELLOW_LIGHT_BUTTON = 35
 GREEN_LIGHT_BUTTON = 37
 
+UPDATE_INTERVAL = .2
 
 inputs = [MODE]
 input_state = {}
@@ -129,33 +130,27 @@ if __name__ == '__main__':
             while input_state[MODE]:
                 Update_Light({RED_LIGHT:True,YELLOW_LIGHT:False,GREEN_LIGHT:False})
                 t_start=time.time()
-                #Start_Delay(10)
-                print(t_start)
                 while (time.time() <= t_start+10) and input_state[MODE]:
-                    time.sleep(.2)
-                print("\n")
-                Update_Light({RED_LIGHT:True,YELLOW_LIGHT:True,GREEN_LIGHT:False})
-                #Start_Delay(3)
-                t_start=time.time()
+                    time.sleep(UPDATE_INTERVAL)
+                if input_state[MODE]:
+                    Update_Light({RED_LIGHT:True,YELLOW_LIGHT:True,GREEN_LIGHT:False})
+                    t_start=time.time()
 
-                print(t_start)
-                while (time.time() <= t_start+3) and input_state[MODE]:
-                    time.sleep(.2)
-                print("\n")
-                Update_Light({RED_LIGHT:False,YELLOW_LIGHT:False,GREEN_LIGHT:True})
-                t_start=time.time()
+                    while (time.time() <= t_start+3) and input_state[MODE]:
+                        time.sleep(UPDATE_INTERVAL)
+                if input_state[MODE]:
+                    Update_Light({RED_LIGHT:False,YELLOW_LIGHT:False,GREEN_LIGHT:True})
+                    t_start=time.time()
 
-                #Start_Delay(10)
-                print(t_start)
-                while (time.time() <= t_start+10) and input_state[MODE]:
-                    time.sleep(.2)
-                print("\n")
-                Update_Light({RED_LIGHT:False,YELLOW_LIGHT:True,GREEN_LIGHT:False})
-                t_start=time.time()
-                #Start_Delay(4)
-                print(t_start)
-                while (time.time() <= t_start+4) and input_state[MODE]:
-                    time.sleep(.2)
+                    print(t_start)
+                    while (time.time() <= t_start+10) and input_state[MODE]:
+                        time.sleep(UPDATE_INTERVAL)
+
+                if input_state[MODE]:
+                    Update_Light({RED_LIGHT:False,YELLOW_LIGHT:True,GREEN_LIGHT:False})
+                    t_start=time.time()
+                    while (time.time() <= t_start+4) and input_state[MODE]:
+                        time.sleep(UPDATE_INTERVAL)
                 print(input_state)
             if not input_state[MODE]:
                 print("Manual Mode...")
