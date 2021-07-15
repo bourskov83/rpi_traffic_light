@@ -13,7 +13,7 @@ MODE = 12
 MANUAL_CHANGE = 31
 RED_LIGHT_BUTTON = 16
 YELLOW_LIGHT_BUTTON = 18
-GREEN_LIGHT_BUTTON = 19
+GREEN_LIGHT_BUTTON = 22
 
 UPDATE_INTERVAL = .1
 
@@ -65,7 +65,7 @@ def all_off():
     GPIO.output(RED_LIGHT, GPIO.HIGH)
     GPIO.output(YELLOW_LIGHT, GPIO.HIGH)
     GPIO.output(GREEN_LIGHT, GPIO.HIGH)
-    output_state = {RED_LIGHT:False,YELLOW_LIGHT,False,GREEN_LIGHT:False}
+    output_state = {RED_LIGHT:False,YELLOW_LIGHT:False,GREEN_LIGHT:False}
     return True
 
 
@@ -162,7 +162,7 @@ if __name__ == '__main__':
                     Update_Light(YELLOW_LIGHT:input_state[YELLOW_LIGHT_BUTTON])
                 if not input_state[GREEN_LIGHT_BUTTON] == output_state[GREEN_LIGHT]:
                     Update_Light(GREEN_LIGHT:input_state[GREEN_LIGHT_BUTTON])
-                    
+
 
                 time.sleep(.2)
 
