@@ -153,10 +153,10 @@ if __name__ == '__main__':
                         time.sleep(UPDATE_INTERVAL)
                 print(input_state)
             if not input_state[MODE]:
-                print("Manual Mode...")
-                print(f"RED:{GPIO.input(RED_LIGHT)}")
-                print(f"YELLOW:{GPIO.input(YELLOW_LIGHT)}")
-                print(f"GREEN:{GPIO.input(GREEN_LIGHT)}")
+            #    print("Manual Mode...")
+            #    print(f"RED:{GPIO.input(RED_LIGHT)}")
+            #    print(f"YELLOW:{GPIO.input(YELLOW_LIGHT)}")
+            #    print(f"GREEN:{GPIO.input(GREEN_LIGHT)}")
                 time.sleep(.2)
 
 
