@@ -109,7 +109,7 @@ if __name__ == '__main__':
 
     init_gpio()
     all_off()
-    AUTO_MODE = input_state[MODE]
+    AUTO_MODE = input_state.get(MODE)
 
 
 #    scan_thread = threading.Thread(target=Scan_Input, args=(SCAN_INTERVAL,), daemon=True)
