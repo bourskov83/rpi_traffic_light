@@ -47,7 +47,7 @@ def init_gpio():
     # Inputs
     for input in inputs:
         GPIO.setup(input, GPIO.IN, pull_up_down=GPIO.PUD_UP)
-        GPIO.add_event_detect(input, GPIO.BOTH, callback=InputUpdate, bouncetime=100)
+        GPIO.add_event_detect(input, GPIO.BOTH, callback=InputUpdate, bouncetime=200)
 
         # initialize input_state dict
         InputUpdate(input)
