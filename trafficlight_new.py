@@ -25,7 +25,7 @@ last_mode_auto = False
 manual_change = False
 manual_change_last_state = "RED"
 
-logger = logging.getLogger("__main__")
+logger = logging.getLogger(__name__)
 logging.basicConfig(format='[%(name)s.%(funcName)-15s][%(levelname)-9s]%(filename)s:%(lineno)-4s:%(message)s')
 logger.setLevel(logging.DEBUG)
 
@@ -165,9 +165,9 @@ if __name__ == '__main__':
 
 
                 if input_state[RED_LIGHT_BUTTON] or input_state[YELLOW_LIGHT_BUTTON] or input_state[GREEN_LIGHT_BUTTON]:
-                    logger.info('Manual color selected')
                     manual_change = False
-
+                if not manual_change:
+                    logger.info('Manual color selected')
 
 
                 if not manual_change:
