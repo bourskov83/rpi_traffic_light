@@ -10,18 +10,19 @@ YELLOW_LIGHT = 13
 GREEN_LIGHT = 15
 # INPUTs
 MODE = 12
-MANUAL_CHANGE = 31
+MANUAL_CHANGE = 24
 RED_LIGHT_BUTTON = 16
 YELLOW_LIGHT_BUTTON = 18
 GREEN_LIGHT_BUTTON = 22
 
 UPDATE_INTERVAL = .1
 
-inputs = [MODE,RED_LIGHT_BUTTON,YELLOW_LIGHT_BUTTON,GREEN_LIGHT_BUTTON]
+inputs = [MODE,RED_LIGHT_BUTTON,YELLOW_LIGHT_BUTTON,GREEN_LIGHT_BUTTON,MANUAL_CHANGE]
 input_state = {}
 output_state = {}
-last_mode = False
-
+last_mode_auto = False
+manual_change = False
+manual_change_last_state = "RED"
 
 def InputUpdate(channel):
     if GPIO.input(channel):
@@ -128,7 +129,7 @@ if __name__ == '__main__':
             # AUTO mode
             # change lights with threading.Timer
             while input_state[MODE]:
-                last_mode = True
+                last_mode_auto = True
                 Update_Light({RED_LIGHT:True,YELLOW_LIGHT:False,GREEN_LIGHT:False})
                 t_start=time.time()
                 while (time.time() <= t_start+10) and input_state[MODE]:
@@ -143,7 +144,6 @@ if __name__ == '__main__':
                     Update_Light({RED_LIGHT:False,YELLOW_LIGHT:False,GREEN_LIGHT:True})
                     t_start=time.time()
 
-                    print(t_start)
                     while (time.time() <= t_start+10) and input_state[MODE]:
                         time.sleep(UPDATE_INTERVAL)
 
@@ -154,16 +154,41 @@ if __name__ == '__main__':
                         time.sleep(UPDATE_INTERVAL)
                 print(input_state)
             if not input_state[MODE]:
-                if last_mode == True:
+                if last_mode_auto == True:
                     all_off()
-                    last_mode = False
+                    last_mode_auto = False
+                if input_state[MANUAL_CHANGE]:
+                    manual_change = True
+                    if manual_change_last_state == "RED":
+                        Update_Light({RED_LIGHT:True,YELLOW_LIGHT:True,GREEN_LIGHT:False})
+                        t_start=time.time()
 
-                if not input_state[RED_LIGHT_BUTTON] == output_state[RED_LIGHT]:
-                    Update_Light({RED_LIGHT:input_state[RED_LIGHT_BUTTON]})
-                if not input_state[YELLOW_LIGHT_BUTTON] == output_state[YELLOW_LIGHT]:
-                    Update_Light({YELLOW_LIGHT:input_state[YELLOW_LIGHT_BUTTON]})
-                if not input_state[GREEN_LIGHT_BUTTON] == output_state[GREEN_LIGHT]:
-                    Update_Light({GREEN_LIGHT:input_state[GREEN_LIGHT_BUTTON]})
+                        while (time.time() <= t_start+3) and input_state[MODE]:
+                            time.sleep(UPDATE_INTERVAL)
+
+                        Update_Light({RED_LIGHT:False,YELLOW_LIGHT:False,GREEN_LIGHT:True})
+                        manual_change_last_state = "GREEN"
+
+                    elif manual_change_last_state == "GREEN":
+                        Update_Light({RED_LIGHT:False,YELLOW_LIGHT:True,GREEN_LIGHT:False})
+                        t_start=time.time()
+                        while (time.time() <= t_start+4) and input_state[MODE]:
+                            time.sleep(UPDATE_INTERVAL)
+                        Update_Light({RED_LIGHT:True,YELLOW_LIGHT:False,GREEN_LIGHT:False})
+
+
+
+                if input_state[RED_LIGHT_BUTTON] or input_state[YELLOW_LIGHT_BUTTON] or input_state[GREEN_LIGHT_BUTTON]:
+                    manual_change = False
+
+
+                if not manual_change:
+                    if  input_state[RED_LIGHT_BUTTON] != output_state[RED_LIGHT]:
+                        Update_Light({RED_LIGHT:input_state[RED_LIGHT_BUTTON]})
+                    if  input_state[YELLOW_LIGHT_BUTTON] != output_state[YELLOW_LIGHT]:
+                        Update_Light({YELLOW_LIGHT:input_state[YELLOW_LIGHT_BUTTON]})
+                    if  input_state[GREEN_LIGHT_BUTTON] != output_state[GREEN_LIGHT]:
+                        Update_Light({GREEN_LIGHT:input_state[GREEN_LIGHT_BUTTON]})
 
 
                 time.sleep(.2)
