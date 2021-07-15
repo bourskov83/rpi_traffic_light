@@ -115,7 +115,6 @@ if __name__ == '__main__':
 #    scan_thread = threading.Thread(target=Scan_Input, args=(SCAN_INTERVAL,), daemon=True)
 #    scan_thread.start()
 
-    a = 0
 
     try:
         while True:
@@ -129,22 +128,22 @@ if __name__ == '__main__':
             while input_state[MODE]:
                 Update_Light({RED_LIGHT:True,YELLOW_LIGHT:False,GREEN_LIGHT:False})
                 Start_Delay(10)
-                while DELAY_END == False and AUTO_MODE:
+                while DELAY_END == False and input_state[MODE]:
                     pass
                 print("\n")
                 Update_Light({RED_LIGHT:True,YELLOW_LIGHT:True,GREEN_LIGHT:False})
                 Start_Delay(3)
-                while DELAY_END == False and AUTO_MODE:
+                while DELAY_END == False and input_state[MODE]:
                     pass
                 print("\n")
                 Update_Light({RED_LIGHT:False,YELLOW_LIGHT:False,GREEN_LIGHT:True})
                 Start_Delay(10)
-                while DELAY_END == False and AUTO_MODE:
+                while DELAY_END == False and input_state[MODE]:
                     pass
                 print("\n")
                 Update_Light({RED_LIGHT:False,YELLOW_LIGHT:True,GREEN_LIGHT:False})
                 Start_Delay(4)
-                while DELAY_END == False and AUTO_MODE:
+                while DELAY_END == False and input_state[MODE]:
                     pass
                 print(input_state)
             if not input_state[MODE]:
