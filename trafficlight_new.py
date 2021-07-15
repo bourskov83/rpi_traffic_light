@@ -114,6 +114,8 @@ if __name__ == '__main__':
 #    scan_thread = threading.Thread(target=Scan_Input, args=(SCAN_INTERVAL,), daemon=True)
 #    scan_thread.start()
 
+    a = 0
+
     try:
         while True:
 
@@ -146,6 +148,10 @@ if __name__ == '__main__':
             if not AUTO_MODE:
                 print("Manual Mode...")
 
+        a+=1
+        if a = 10:
+            clean_gpio()
+            exit()        
 
     except KeyboardInterrupt:
         print("Exit...")
